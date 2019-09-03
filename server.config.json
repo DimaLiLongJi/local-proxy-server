@@ -1,0 +1,11 @@
+{
+  "proxyUrl": [
+    {
+      "token": "/api",
+      "baseUrl": "https://wxxcs.hl139.net/api"
+    }, {
+      "token": "/logs",
+      "baseUrl": "https://wxxcs.hl139.net/logs"
+    }
+  ]
+}
