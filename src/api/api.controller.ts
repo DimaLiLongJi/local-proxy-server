@@ -26,7 +26,10 @@ export class ApiController {
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
       }
-    }).pipe(map(response => response.data));
+    }).pipe(map(response => {
+      console.log(`请求 ${req.url} 的相应：`, response.data);
+      return response.data;
+    }));
   }
 
   @Post('*')
@@ -41,7 +44,10 @@ export class ApiController {
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
       }
-    }).pipe(map(response => response.data));
+    }).pipe(map(response => {
+      console.log(`请求 ${req.url} 的相应：`, response.data);
+      return response.data;
+    }));
   }
 
   @Put('*')
@@ -56,7 +62,10 @@ export class ApiController {
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
       }
-    }).pipe(map(response => response.data));
+    }).pipe(map(response => {
+      console.log(`请求 ${req.url} 的相应：`, response.data);
+      return response.data;
+    }));
   }
 
   @Patch('*')
@@ -71,7 +80,10 @@ export class ApiController {
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
       }
-    }).pipe(map(response => response.data));
+    }).pipe(map(response => {
+      console.log(`请求 ${req.url} 的相应：`, response.data);
+      return response.data;
+    }));
   }
 
   @Delete('*')
@@ -85,6 +97,9 @@ export class ApiController {
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
       }
-    }).pipe(map(response => response.data));
+    }).pipe(map(response => {
+      console.log(`请求 ${req.url} 的相应：`, response.data);
+      return response.data;
+    }));
   }
 }
