@@ -7,6 +7,7 @@ export class LoggingInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const req = context.switchToHttp().getRequest();
     console.log('拦截器拦截的请求头', req.headers);
+    console.log('拦截器拦截的请求体', req.body);
     return next.handle().pipe(map(data => data));
   }
 }

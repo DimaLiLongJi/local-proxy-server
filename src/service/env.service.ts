@@ -16,8 +16,8 @@ export class EnvService {
       error: '请去 server.config.json 配置下代理',
     }, 404);
 
-    proxyUrl = reqUrl.match(`^${findUrl.token}(.*)`)[1];
-    console.log('本地代理地址：', reqUrl);
+    proxyUrl = reqUrl.match(`^${findUrl.token}/(.*)`)[1];
+    console.log('本地代理地址：', reqUrl, proxyUrl);
     console.log('代理目标地址：', `${findUrl.baseUrl}/${proxyUrl}`);
     return `${findUrl.baseUrl}/${proxyUrl}`;
   }

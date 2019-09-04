@@ -35,11 +35,6 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
-    console.log(6666611111, {
-      cookie: headers.cookie,
-      'user-agent': headers['user-agent'],
-      'content-type': headers['content-type'],
-    });
     return this.httpService.post(this.envService.getBaseUrl(req.url), body, {
       headers: {
         cookie: headers.cookie,

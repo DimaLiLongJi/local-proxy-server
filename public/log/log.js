@@ -18,6 +18,9 @@ function createSourceId() {
   return sourceId;
 }
 
+var baseUrl = 'https://wxxcs.hl139.net';
+if (window.location.hostname === 'localhost') baseUrl = '';
+
 
 /**
  * 创建单页访问日志
@@ -35,16 +38,16 @@ function createSourceId() {
  */
 function createVisitLog(logData) {
   console.log(logData);
-  // return $.ajax("https://wxxcs.hl139.net/logs/visitRecord/addLog", {
-  return $.ajax("/logs/visitRecord/addLog", {
+  return $.ajax(baseUrl + "/logs/visitRecord/addLog", {
     type: 'POST',
-    data: {
+    contentType: 'application/json',
+    data: JSON.stringify({
       mobile: logData.mobile,
       jumpUrl: logData.jumpUrl,
       url: window.location.href,
       channel: logData.channel,
       sourceId: createSourceId(),
-    }
+    })
   });
 }
 
@@ -83,10 +86,10 @@ function createVisitLog(logData) {
  * @returns
  */
 function createHandlerLog(logData) {
-  // return $.ajax("https://wxxcs.hl139.net/logs/handleRecord/handleAddLog", {
-  return $.ajax("/logs/handleRecord/handleAddLog", {
+  return $.ajax(baseUrl + "/logs/handleRecord/handleAddLog", {
     type: 'POST',
-    data: {
+    contentType: 'application/json',
+    data: JSON.stringify({
       url: window.location.href,
       channel: logData.channel,
       funcationName: logData.funcationName,
@@ -101,7 +104,7 @@ function createHandlerLog(logData) {
       resultCode: logData.resultCode,
       returnCode: logData.returnCode || 'null',
       returnMsg: logData.returnMsg || 'null',
-    }
+    })
   });
 }
 
@@ -125,10 +128,10 @@ function createHandlerLog(logData) {
 */
  function createActivityVisitLog(logData) {
    console.log(logData);
-  //  return $.ajax("https://wxxcs.hl139.net/logs/activityVisitRecord/addActivityLog", {
-   return $.ajax("/logs/activityVisitRecord/addActivityLog", {
+   return $.ajax(baseUrl + "/logs/activityVisitRecord/addActivityLog", {
      type: 'POST',
-     data: {
+     contentType: 'application/json',
+     data: JSON.stringify({
        actId: logData.actId,
        actName: logData.actName,
        mobile: logData.mobile,
@@ -136,6 +139,6 @@ function createHandlerLog(logData) {
        url: window.location.href,
        channel: logData.channel,
        sourceId: createSourceId(),
-     }
+     })
    });
  }
