@@ -9,12 +9,8 @@ async function bootstrap() {
   );
 
   app.useStaticAssets(join(__dirname, '..', 'public'));
-  // app.setBaseViewsDir(join(__dirname, '..', 'public'));
-  // app.setViewEngine('ejs');
-  // app.useStaticAssets({
-  //   root: join(__dirname, '..', 'public'),
-  //   prefix: '/static/',
-  // }); // http://localhost:3000/static/xxx.txt
+  app.setBaseViewsDir(join(__dirname, '..', 'view'));
+  app.setViewEngine('ejs');
 
   await app.listen(3000);
 }
