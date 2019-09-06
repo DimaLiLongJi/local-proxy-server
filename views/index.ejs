@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>js-template</title>
+    <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 -->
+    <script src="/common/auto-scale.js"></script>
+    <link rel="stylesheet" href="/dist/<%- path %>.css">
+  </head>
+  <body>
+    这个是根路径：<%- path %>
+    <noscript>
+      <strong>We're sorry but js-template doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+    </noscript>
+    <div id="app">
+      <router-view></router-view>
+    </div>
+
+    <!-- 中国移动APP SDK 开始 -->
+    <script src="/common/leadeon.js"></script>
+    <!-- 中国移动APP SDK 结束 -->
+
+    <!-- 中国移动的插码开始 -->
+    <script src="/common/webtrends.load.js"></script>
+    <script>multiTrack();</script>
+    <!-- 中国移动的插码结束 -->
+
+    <!-- js逻辑文件开始 -->
+    <script src="/dist/<%- path %>.js"></script>
+    <!-- js逻辑文件结束 -->
+  </body>
+</html>
