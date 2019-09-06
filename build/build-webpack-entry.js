@@ -2,7 +2,7 @@ const glob = require('glob');
 const path = require('path');
 
 const ENTRY = 'main.js';
-const PAGE_FLODER = path.resolve(__dirname, '../views/pages/');
+const PAGE_FLODER = path.resolve(__dirname, '../public/pages/');
 const PAGES = PAGE_FLODER + '/**/' + ENTRY;
 
 /**

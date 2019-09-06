@@ -10,7 +10,7 @@ const objectAssign = require('object-assign');
 const pxRegex = /"[^"]+"|'[^']+'|url\([^\)]+\)|(\d*\.?\d+)px/ig;
 
 const defaults = {
-  viewportWidth: 750,
+  viewportWidth: 750, // iphone6 的尺寸750px*1334px
   viewportHeight: 568, // not now used; TODO: need for different units and math for different properties
   unitPrecision: 5,
   viewportUnit: 'vw',

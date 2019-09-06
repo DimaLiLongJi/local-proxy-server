@@ -8,7 +8,7 @@ module.exports = {
   name: 'vue',
   entry: initPages(),
   output: {
-    path: path.resolve(__dirname, 'public/dist'),
+    path: path.resolve(__dirname, 'static/dist'),
     filename: '[name].js',
     publicPath: '/dist/',
   },
@@ -28,15 +28,28 @@ module.exports = {
               // 自定义生成的类名
               localIdentName: '[local]_[hash:base64:8]',
             },
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer')({
+                  browsers: [
+                    'Android >= 4.0',
+                    'iOS >= 7.0'
+                  ]
+                }),
+                require('./build/postcss-px-to-rem-vw')()
+              ]
+            }
           },
           'less-loader'
         ],
-        include: path.resolve(__dirname, 'views'),
+        include: path.resolve(__dirname, 'public'),
       },
       {
         test: /\.css$/,
         use: [
-          { loader: MiniCssExtractPlugin.loader, },
+          { loader: MiniCssExtractPlugin.loader },
           {
             loader: 'css-loader',
             options: {
@@ -44,28 +57,31 @@ module.exports = {
                 safe: true,
               },
             },
-          }
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [
+                require('autoprefixer')({
+                  browsers: [
+                    'Android >= 4.0',
+                    'iOS >= 7.0'
+                  ]
+                }),
+                require('./build/postcss-px-to-rem-vw')()
+              ]
+            }
+          },
         ],
-        include: path.resolve(__dirname, 'views'),
+        include: path.resolve(__dirname, 'public'),
       },
       {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          postcss: {
-            plugins: [
-              require('autoprefixer')({
-                browsers: [
-                  'Android >= 4.0',
-                  'iOS >= 7.0'
-                ]
-              }),
-              require('./build/postcss-px-to-rem-vw')()
-            ]
-          },
+          postcss: {},
           extractCSS: true,
         },
-        include: path.resolve(__dirname, 'views'),
+        include: path.resolve(__dirname, 'public'),
       },
       /** end */
 
@@ -92,7 +108,7 @@ module.exports = {
         options: {
           name: 'images/[name].[ext]?[hash]',
         },
-        include: path.resolve(__dirname, 'views'),
+        include: path.resolve(__dirname, 'public'),
       }
     ],
   },
@@ -111,6 +127,7 @@ module.exports = {
   resolve: {
     alias: {
       vue$: 'vue/dist/vue.esm.js',
+      '@': './public',
     },
   },
 };
