@@ -10,9 +10,12 @@ module.exports = {
   rules: {
     'semi': ['error', 'always'],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    "no-var": 1,
+    "camelcase": 2,
   },
   parserOptions: {
     parser: 'babel-eslint'
-  }
+  },
+  parser: 'vue-eslint-parser'
 }

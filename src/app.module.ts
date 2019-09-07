@@ -9,6 +9,6 @@ import { PageModule } from './page/page.module';
     InterceptorModule,
     PageModule,
     ApiModule,
-  ]
+  ],
 })
-export class AppModule {}
+export class AppModule { }

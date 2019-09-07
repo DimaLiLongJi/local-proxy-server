@@ -5,6 +5,6 @@ import { EnvService } from '../service/env.service';
 @Module({
   imports: [HttpModule],
   providers: [EnvService],
-  controllers: [ApiController]
+  controllers: [ApiController],
 })
 export class ApiModule { }

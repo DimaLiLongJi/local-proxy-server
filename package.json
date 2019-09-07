@@ -17,7 +17,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "clean": "rm -rf public/dist"
+    "clean": "rm -rf static/dist"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
@@ -47,11 +47,13 @@
     "@types/node": "11.13.4",
     "@types/supertest": "2.0.7",
     "autoprefixer": "^9.6.1",
+    "babel-eslint": "^10.0.3",
     "babel-loader": "^8.0.2",
     "css-loader": "^0.28.11",
     "ejs": "^2.7.1",
     "eslint": "^3.18.0",
     "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^4.2.0",
     "jest": "24.7.1",
     "less-loader": "^5.0.0",

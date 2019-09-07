@@ -12,7 +12,7 @@ import { Request as ExpressRequest } from 'express';
 export class ApiController {
   constructor(
     private readonly httpService: HttpService,
-    private readonly envService: EnvService
+    private readonly envService: EnvService,
   ) { }
 
   @Get('*')
@@ -20,14 +20,14 @@ export class ApiController {
     @Req() req: ExpressRequest,
     @Headers() headers: any,
   ): Observable<AxiosResponse<any>> {
-    return this.httpService.get(this.envService.getBaseUrl(req.url), {
+    return this.httpService.get(this.envService.getProxyUrl(req.url), {
       headers: {
-        cookie: headers.cookie,
+        'cookie': headers.cookie,
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
-      }
+      },
     }).pipe(map(response => {
-      console.log(`请求 ${req.url} 的相应：`, response.data);
+      console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
     }));
   }
@@ -38,14 +38,14 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
-    return this.httpService.post(this.envService.getBaseUrl(req.url), body, {
+    return this.httpService.post(this.envService.getProxyUrl(req.url), body, {
       headers: {
-        cookie: headers.cookie,
+        'cookie': headers.cookie,
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
-      }
+      },
     }).pipe(map(response => {
-      console.log(`请求 ${req.url} 的相应：`, response.data);
+      console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
     }));
   }
@@ -56,14 +56,14 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
-    return this.httpService.put(this.envService.getBaseUrl(req.url), body, {
+    return this.httpService.put(this.envService.getProxyUrl(req.url), body, {
       headers: {
-        cookie: headers.cookie,
+        'cookie': headers.cookie,
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
-      }
+      },
     }).pipe(map(response => {
-      console.log(`请求 ${req.url} 的相应：`, response.data);
+      console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
     }));
   }
@@ -74,14 +74,14 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
-    return this.httpService.patch(this.envService.getBaseUrl(req.url), body, {
+    return this.httpService.patch(this.envService.getProxyUrl(req.url), body, {
       headers: {
-        cookie: headers.cookie,
+        'cookie': headers.cookie,
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
-      }
+      },
     }).pipe(map(response => {
-      console.log(`请求 ${req.url} 的相应：`, response.data);
+      console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
     }));
   }
@@ -91,14 +91,14 @@ export class ApiController {
     @Req() req: ExpressRequest,
     @Headers() headers: any,
   ): Observable<AxiosResponse<any>> {
-    return this.httpService.delete(this.envService.getBaseUrl(req.url), {
+    return this.httpService.delete(this.envService.getProxyUrl(req.url), {
       headers: {
-        cookie: headers.cookie,
+        'cookie': headers.cookie,
         'user-agent': headers['user-agent'],
         'content-type': headers['content-type'],
-      }
+      },
     }).pipe(map(response => {
-      console.log(`请求 ${req.url} 的相应：`, response.data);
+      console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
     }));
   }

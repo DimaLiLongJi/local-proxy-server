@@ -1,12 +1,12 @@
 {
-  "proxyUrl": [
+  "proxy": [
     {
-      "token": "/api",
-      "baseUrl": "https://wxxcs.hl139.net/api",
+      "baseUrl": "/api",
+      "target": "https://wxxcs.hl139.net/api",
       "commit": "友朋接口"
     }, {
-      "token": "/logs",
-      "baseUrl": "https://wxxcs.hl139.net/logs",
+      "baseUrl": "/logs",
+      "target": "https://wxxcs.hl139.net/logs",
       "commit": "国杨日志"
     }
   ]

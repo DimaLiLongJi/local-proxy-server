@@ -3,6 +3,6 @@ import { LoggingInterceptor } from '../interceptor/logging.interceptor';
 
 @Module({
   providers: [LoggingInterceptor],
-  exports: [LoggingInterceptor]
+  exports: [LoggingInterceptor],
 })
-export class InterceptorModule {}
+export class InterceptorModule { }

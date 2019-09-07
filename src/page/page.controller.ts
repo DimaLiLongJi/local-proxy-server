@@ -6,11 +6,13 @@ export class PageController {
 
   @Get('*')
   @Render('index')
-  pageGet(@Req() req: ExpressRequest): Object {
+  pageGet(@Req() req: ExpressRequest): {
+    path: string,
+  } {
     const path = req.url.match(/^\/pages\/([^\/]+)[^\/]*/)[1];
     console.log('访问到的页面路径', req.url, path);
     return {
-      path
+      path,
     };
   }
 }

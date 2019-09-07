@@ -3,9 +3,11 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
 
-async function bootstrap() {
+async function main() {
   const app = await NestFactory.create<NestExpressApplication>(
-    AppModule, { cors: true }
+    AppModule, {
+      cors: true,
+    },
   );
   // 静态资源
   app.useStaticAssets(join(__dirname, '..', 'static'));
@@ -17,4 +19,4 @@ async function bootstrap() {
   await app.listen(3000);
 }
 
-bootstrap();
+main();
