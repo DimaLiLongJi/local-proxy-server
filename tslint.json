@@ -15,5 +15,10 @@
     "object-literal-sort-keys": false,
     "no-console": false
   },
+  "linterOptions": {
+    "exclude": [
+      "public/**"
+    ]
+  },
   "rulesDirectory": []
 }
