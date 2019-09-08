@@ -100,18 +100,50 @@ static
 
 ```typescript
 @Component({
-  components: { HelloWorld },
+  components: {
+    HelloWorld,
+  },
 })
 export default class Home extends Vue {
-  @Post
-  private postMethod!: TypePost;
+  @PostMapping('/api/gxjt/digitaluser/findTypeByMobile')
+  private getDetail!: TypeHttpRequest;
 
   async created() {
-    const result = await this.postMethod('/api/gxjt/digitaluser/findTypeByMobile');
-    console.log(result);
+    const result = await this.getDetail({
+      params: {
+        mobile: '你的手机号'
+      }
+    });
+    console.log(44444, result);
   }
 }
 ```
+
+或:
+
+```typescript
+@Component({
+  components: {
+    HelloWorld,
+  },
+})
+export default class Home extends Vue {
+  @PostMapping()
+  private postMethod!: TypeHttpRequest;
+
+  async created() {
+    const result = await this.postMethod({
+      url: '/api/gxjt/digitaluser/findTypeByMobile',
+      params: {
+        mobile: '你的手机号'
+      }
+    });
+    console.log(44444, result);
+  }
+}
+```
+
+或:
 
 ```javascript
 export default {
@@ -120,8 +152,12 @@ export default {
     HelloWorld
   },
   async created() {
-    const result = await postMethod('/api/gxjt/digitaluser/findTypeByMobile');
-    console.log(result);
+    const result = await postMethod('/api/gxjt/digitaluser/findTypeByMobile', {
+      params: {
+        mobile: '你的手机号'
+      }
+    });
+    console.log(44444, result);
   }
-};
+
 ```

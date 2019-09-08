@@ -14,7 +14,11 @@ export default {
     HelloWorld
   },
   async created() {
-    const result = await postMethod('/api/gxjt/digitaluser/findTypeByMobile?mobile=18246186492');
+    const result = await postMethod('/api/gxjt/digitaluser/findTypeByMobile', {
+      params: {
+        mobile: 18246186492
+      }
+    });
     console.log(44444, result);
   }
 };

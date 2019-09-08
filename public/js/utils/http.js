@@ -12,11 +12,11 @@ axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err)
  * @param {string} url
  * @returns {AxiosPromise<any>}
  */
-export function getMethod(url) {
+export function getMethod(url, config) {
   return axios({
-    method: 'get',
     url,
-    withCredentials: true,
+    ...config,
+    method: 'get',
   });
 }
 
@@ -28,12 +28,11 @@ export function getMethod(url) {
  * @param {Object} params
  * @returns {AxiosPromise<any>}
  */
-export function postMethod(url, params) {
+export function postMethod(url, config) {
   return axios({
-    method: 'post',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'post',
   });
 }
 
@@ -45,12 +44,11 @@ export function postMethod(url, params) {
  * @param {Object} params
  * @returns {AxiosPromise<any>}
  */
-export function putMethod(url, params) {
+export function putMethod(url, config) {
   return axios({
-    method: 'put',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'put',
   });
 }
 
@@ -62,11 +60,10 @@ export function putMethod(url, params) {
  * @param {Object} params
  * @returns {AxiosPromise<any>}
  */
-export function deleteMethod(url, params) {
+export function deleteMethod(url, config) {
   return axios({
-    method: 'delete',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'delete',
   });
 }

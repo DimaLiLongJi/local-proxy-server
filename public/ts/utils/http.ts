@@ -1,12 +1,6 @@
-import axios, { AxiosPromise } from 'axios';
+import axios, { AxiosPromise, AxiosRequestConfig } from 'axios';
 
-export type TypeGet = <V = any>(url: string) => AxiosPromise<V>;
-
-export type TypePost = <T = any, V = any>(url: string, params?: T) => AxiosPromise<V>;
-
-export type TypePut = <T = any, V = any>(url: string, params?: T) => AxiosPromise<V>;
-
-export type TypeDelete = <T = any, V = any>(url: string, params?: T) => AxiosPromise<V>;
+export type TypeHttpRequest = <V = any>(config?: AxiosRequestConfig) => AxiosPromise<V>;
 
 // set interceptors of axios
 axios.interceptors.request.use((config) => config, (err) => Promise.resolve(err));
@@ -18,14 +12,15 @@ axios.interceptors.response.use((res) => res.data, (err) => Promise.resolve(err)
  *
  * @export
  * @template V
- * @param {string} url
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
  * @returns {AxiosPromise<V>}
  */
-export function getMethod<V = any>(url: string): AxiosPromise<V> {
+export function getMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
   return axios({
-    method: 'get',
     url,
-    withCredentials: true,
+    ...config,
+    method: 'get',
   });
 }
 
@@ -33,18 +28,16 @@ export function getMethod<V = any>(url: string): AxiosPromise<V> {
  * function postMethod for for http request of method post
  *
  * @export
- * @template T
  * @template V
- * @param {string} url
- * @param {T} params
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
  * @returns {AxiosPromise<V>}
  */
-export function postMethod<T = any, V = any>(url: string, params?: T): AxiosPromise<V> {
+export function postMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
   return axios({
-    method: 'post',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'post',
   });
 }
 
@@ -52,18 +45,16 @@ export function postMethod<T = any, V = any>(url: string, params?: T): AxiosProm
  * function putMethod for for http request of method put
  *
  * @export
- * @template T
  * @template V
- * @param {string} url
- * @param {T} params
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
  * @returns {AxiosPromise<V>}
  */
-export function putMethod<T = any, V = any>(url: string, params?: T): AxiosPromise<V> {
+export function putMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
   return axios({
-    method: 'put',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'put',
   });
 }
 
@@ -71,69 +62,71 @@ export function putMethod<T = any, V = any>(url: string, params?: T): AxiosPromi
  * function deleteMethod for for http request of method delete
  *
  * @export
- * @template T
  * @template V
- * @param {string} url
- * @param {T} params
+ * @param {string} [url]
+ * @param {AxiosRequestConfig} [config={}]
  * @returns {AxiosPromise<V>}
  */
-export function deleteMethod<T = any, V = any>(url: string, params?: T): AxiosPromise<V> {
+export function deleteMethod<V = any>(url?: string, config: AxiosRequestConfig = {}): AxiosPromise<V> {
   return axios({
-    method: 'delete',
     url,
-    data: params,
-    withCredentials: true,
+    ...config,
+    method: 'delete',
   });
 }
 
 /**
- * decorator @Get for http request of method get
+ * decorator @GetMapping for http request of method get
  *
  * @export
- * @param {*} target
- * @param {string} propertyName
+ * @param {string} [url]
  * @returns
  */
-export function Get(target: any, propertyName: string) {
-  target[propertyName] = (url: string) => getMethod(url);
-  return target[propertyName];
+export function GetMapping(url?: string) {
+  return (target: any, propertyName: string) => {
+    target[propertyName] = (config: any = {}) => getMethod(url, config);
+    return target[propertyName];
+  };
 }
 
 /**
- * decorator @Post for http request of method post
+ * decorator @PostMapping for http request of method post
  *
  * @export
- * @param {*} target
- * @param {string} propertyName
+ * @param {string} [url]
  * @returns
  */
-export function Post(target: any, propertyName: string) {
-  target[propertyName] = (url: string, params?: any) => postMethod(url, params);
-  return target[propertyName];
+export function PostMapping(url?: string) {
+  return (target: any, propertyName: string) => {
+    target[propertyName] = (config: any = {}) => postMethod(url, config);
+    return target[propertyName];
+  };
 }
 
 /**
- * decorator @Put for http request of method put
+ * decorator @PutMapping for http request of method put
  *
  * @export
- * @param {*} target
- * @param {string} propertyName
+ * @param {string} [url]
  * @returns
  */
-export function Put(target: any, propertyName: string) {
-  target[propertyName] = (url: string, params?: any) => putMethod(url, params);
-  return target[propertyName];
+export function PutMapping(url?: string) {
+  return (target: any, propertyName: string) => {
+    target[propertyName] = (config: any = {}) => putMethod(url, config);
+    return target[propertyName];
+  };
 }
 
 /**
- * decorator @Delete for http request of method delete
+ * decorator @DeleteMapping for http request of method delete
  *
  * @export
- * @param {*} target
- * @param {string} propertyName
+ * @param {string} [url]
  * @returns
  */
-export function Delete(target: any, propertyName: string) {
-  target[propertyName] = (url: string, params?: any) => deleteMethod(url, params);
-  return target[propertyName];
+export function DeleteMapping(url?: string) {
+  return (target: any, propertyName: string) => {
+    target[propertyName] = (config: any = {}) => deleteMethod(url, config);
+    return target[propertyName];
+  };
 }
