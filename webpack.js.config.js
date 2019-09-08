@@ -3,6 +3,9 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin, } = require('vue-loader');
 const { initEntry } = require('./build/build-webpack-entry');
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 
 module.exports = {
   name: 'vue-js',
@@ -82,14 +85,7 @@ module.exports = {
         exclude: [
           path.resolve(__dirname, 'node_modules')
         ],
-        loader: 'babel-loader',
-        options: {
-          presets: ['@babel/env'],
-          plugins: [
-            '@babel/plugin-transform-async-to-generator',
-            '@babel/plugin-proposal-optional-chaining'
-          ],
-        },
+        use: ['happypack/loader?id=babel']
       }, {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'url-loader',
@@ -111,6 +107,25 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       regeneratorRuntime: 'regenerator-runtime',
+    }),
+    new HappyPack({
+      //用id来标识 happypack处理那里类文件
+      id: 'babel',
+      //如何处理  用法和loader 的配置一样
+      loaders: [{
+        loader: 'babel-loader',
+        options: {
+          presets: ['@babel/env'],
+          plugins: [
+            '@babel/plugin-transform-async-to-generator',
+            '@babel/plugin-proposal-optional-chaining'
+          ],
+        },
+      }],
+      //共享进程池
+      threadPool: happyThreadPool,
+      //允许 HappyPack 输出日志
+      verbose: true,
     })
   ],
   stats: {
