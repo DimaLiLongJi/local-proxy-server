@@ -10,18 +10,31 @@
 ├── views 后台模板
 ├── server.config.json 代理配置文件
 ├── webpack.config.js webpack编译器配置文件
+├── webpack.js.config.js js编译器配置文件
+├── webpack.ts.config.js ts编译器配置文件
 ```
 
 ### public vue前台开发目录
 
+该目录下分为2个模块，`js` 与 `ts` ，根据开发者水平自由选择
+
+**但是 vue3.0 之后三大框架都是ts了，还是多学学ts吧大哥们**
+
 ```
 public
 |
-├── components 通用组件
-├── images 图片资源
-├── pages 多个单页项目，内部一个项目会被打包出一份代码
-├── utils 公共方法
-├── .eslintrc eslint配置文件
+├── js js开发vue
+    ├── components 通用组件
+    ├── images 图片资源
+    ├── pages 多个单页项目，内部一个项目会被打包出一份代码
+    ├── utils 公共方法
+    ├── .eslintrc eslint配置文件
+├── ts ts开发vue
+    ├── components 通用组件
+    ├── images 图片资源
+    ├── pages 多个单页项目，内部一个项目会被打包出一份代码
+    ├── utils 公共方法
+    ├── .eslintrc eslint配置文件
 ```
 
 ### src 本地启动的node后台
@@ -84,6 +97,21 @@ static
 注意：
 
 当在代码中写发起的请求时，则需要写成相对url，例如实际发起请求为 `/api/gxjt/digitaluser/findTypeByMobile` ，则代码中 `url` 需要写成 `/api/gxjt/digitaluser/findTypeByMobile`
+
+```typescript
+@Component({
+  components: { HelloWorld },
+})
+export default class Home extends Vue {
+  @Post
+  private postMethod!: TypePost;
+
+  async created() {
+    const result = await this.postMethod('/api/gxjt/digitaluser/findTypeByMobile');
+    console.log(result);
+  }
+}
+```
 
 ```javascript
 export default {

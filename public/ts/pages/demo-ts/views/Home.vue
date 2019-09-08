@@ -18,10 +18,6 @@ export default class Home extends Vue {
   @Post
   private postMethod!: TypePost;
 
-  // constructor() {
-  //   super();
-  // }
-
   async created() {
     const result = await this.postMethod('/api/gxjt/digitaluser/findTypeByMobile?mobile=18246186492');
     console.log(44444, result);
