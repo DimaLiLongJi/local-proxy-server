@@ -1,5 +1,26 @@
 # 脚手架及配置项说明
 
+## 命令说明
+
+```json
+{
+  "scripts": {
+    "start": "ts-node -r tsconfig-paths/register src/main.ts & webpack --watch --mode=development --progress --devtool '#source-map'",
+    "start:prod": "node dist/main.js && webpack -p --mode=production",
+    "test:front": "webpack --watch --mode=development --progress --devtool '#source-map'",
+    "build": "webpack -p --mode=production",
+    "clean": "rm -rf static/dist dist"
+  },
+}
+```
+
+- `start` 启动本地开发
+- `start:prod` 本地启用生产模式
+- `test:front` webpack 测试本地开发模式打包
+- `build` 生产模式构建打包文件
+- `clean` **linux macos使用**，删除打包文件
+
+
 ## 目录结构及说明
 
 ```
@@ -67,6 +88,7 @@ static
 ├── common 公共文件
 ├── 其他文件夹 不想写框架的直接放这里
 ```
+
 
 ## project.config.json 项目配置文件
 
