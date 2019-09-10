@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Request as ExpressRequest } from 'express';
 
 @UseInterceptors(LoggingInterceptor)
-// @Controller('api')
 @Controller()
 export class ApiController {
   constructor(
@@ -20,12 +19,10 @@ export class ApiController {
     @Req() req: ExpressRequest,
     @Headers() headers: any,
   ): Observable<AxiosResponse<any>> {
+    const proxyHeaders = { ...headers };
+    delete proxyHeaders.host;
     return this.httpService.get(this.envService.getProxyUrl(req.url), {
-      headers: {
-        'cookie': headers.cookie,
-        'user-agent': headers['user-agent'],
-        'content-type': headers['content-type'],
-      },
+      headers: proxyHeaders,
     }).pipe(map(response => {
       console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
@@ -38,12 +35,10 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
+    const proxyHeaders = { ...headers };
+    delete proxyHeaders.host;
     return this.httpService.post(this.envService.getProxyUrl(req.url), body, {
-      headers: {
-        'cookie': headers.cookie,
-        'user-agent': headers['user-agent'],
-        'content-type': headers['content-type'],
-      },
+      headers: proxyHeaders,
     }).pipe(map(response => {
       console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
@@ -56,12 +51,10 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
+    const proxyHeaders = { ...headers };
+    delete proxyHeaders.host;
     return this.httpService.put(this.envService.getProxyUrl(req.url), body, {
-      headers: {
-        'cookie': headers.cookie,
-        'user-agent': headers['user-agent'],
-        'content-type': headers['content-type'],
-      },
+      headers: proxyHeaders,
     }).pipe(map(response => {
       console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
@@ -74,12 +67,10 @@ export class ApiController {
     @Headers() headers: any,
     @Body() body: any = {},
   ): Observable<AxiosResponse<any>> {
+    const proxyHeaders = { ...headers };
+    delete proxyHeaders.host;
     return this.httpService.patch(this.envService.getProxyUrl(req.url), body, {
-      headers: {
-        'cookie': headers.cookie,
-        'user-agent': headers['user-agent'],
-        'content-type': headers['content-type'],
-      },
+      headers: proxyHeaders,
     }).pipe(map(response => {
       console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;
@@ -91,12 +82,10 @@ export class ApiController {
     @Req() req: ExpressRequest,
     @Headers() headers: any,
   ): Observable<AxiosResponse<any>> {
+    const proxyHeaders = { ...headers };
+    delete proxyHeaders.host;
     return this.httpService.delete(this.envService.getProxyUrl(req.url), {
-      headers: {
-        'cookie': headers.cookie,
-        'user-agent': headers['user-agent'],
-        'content-type': headers['content-type'],
-      },
+      headers: proxyHeaders,
     }).pipe(map(response => {
       console.log(`请求 ${req.url} 的响应：`, response.data);
       return response.data;

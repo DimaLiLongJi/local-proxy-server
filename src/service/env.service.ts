@@ -16,7 +16,7 @@ export class EnvService {
     if (!findUrl) {
       throw new HttpException({
         status: HttpStatus.EXPECTATION_FAILED,
-        error: '请去 server.config.json 配置下代理',
+        error: '请去 project.config.json 的 server.proxy 配置下代理',
       }, 404);
     }
 
