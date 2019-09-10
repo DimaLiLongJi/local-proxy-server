@@ -12,9 +12,6 @@
     "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
-    "types": [
-      "shims-vue.d.ts"
-    ],
     "paths": {
       "@/*": [
         "./*"
