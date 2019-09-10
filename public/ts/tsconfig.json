@@ -9,15 +9,18 @@
     "experimentalDecorators": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "types": [
-      "shims-vue.d.ts",
-      "shims-tsx.d.ts"
+      "shims-vue.d.ts"
     ],
     "paths": {
       "@/*": [
         "./*"
+      ],
+      "$root/*": [
+        "../../*"
       ]
     },
     "lib": [
@@ -26,12 +29,13 @@
       "dom.iterable"
     ]
   },
-  // "include": [
-  //   "components/**/*.ts",
-  //   "utils/**/*.ts",
-  //   "pages/**/*.vue",
-  //   "pages/**/*.ts"
-  // ],
+  "include": [
+    "components/**/*.ts",
+    "utils/**/*.ts",
+    "pages/**/*.vue",
+    "pages/**/*.ts",
+    "../../project.config.json"
+  ],
   "exclude": [
     "node_modules"
   ]

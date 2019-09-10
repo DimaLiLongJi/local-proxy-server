@@ -12,6 +12,11 @@
     "incremental": true,
     "resolveJsonModule": true
   },
+  "paths": {
+    "$root/*": [
+      "./*"
+    ]
+  },
   "exclude": [
     "node_modules",
     "dist",

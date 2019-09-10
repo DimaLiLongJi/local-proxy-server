@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import * as configData from '../../server.config.json';
+import * as projectConfig from '../../project.config.json';
 
 @Injectable()
 export class EnvService {
@@ -7,7 +7,7 @@ export class EnvService {
     let proxyUrl = null;
     let findUrl = null;
 
-    configData.proxy.forEach((uri) => {
+    projectConfig.server.proxy.forEach((uri) => {
       if (reqUrl.indexOf(uri.baseUrl) === 0) {
         findUrl = uri;
       }

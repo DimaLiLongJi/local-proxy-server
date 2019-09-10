@@ -8,7 +8,7 @@
 ├── src node后台代码
 ├── static 静态资源
 ├── views 后台模板
-├── server.config.json 代理配置文件
+├── project.config.json 项目配置文件
 ├── webpack.config.js webpack编译器配置文件
 ├── webpack.js.config.js js编译器配置文件
 ├── webpack.ts.config.js ts编译器配置文件
@@ -68,25 +68,34 @@ static
 ├── 其他文件夹 不想写框架的直接放这里
 ```
 
-## server.config.json 配置本地代理
+## project.config.json 项目配置文件
 
 代码示例：
 
 ```json
 {
-  "proxy": [
-    {
-      "baseUrl": "/api",
-      "target": "https://wxxcs.hl139.net/api",
-      "commit": "友朋接口"
-    }, {
-      "baseUrl": "/logs",
-      "target": "https://wxxcs.hl139.net/logs",
-      "commit": "国杨日志"
+  "server": {
+    "proxy": [
+      {
+        "baseUrl": "/api",
+        "target": "https://wxxcs.hl139.net/api",
+        "commit": "友朋接口"
+      }, {
+        "baseUrl": "/logs",
+        "target": "https://wxxcs.hl139.net/logs",
+        "commit": "国杨日志"
+      }
+    ]
+  },
+  "front": {
+    "router": {
+      "baseUrl": "/chinamobiletest/front"
     }
-  ]
+  }
 }
 ```
+
+### server 服务端配置
 
 `proxy` 可以是一个指向开发环境 API 服务器代理的数组：
 
@@ -161,3 +170,21 @@ export default {
   }
 
 ```
+
+### front 前端配置
+
+`router` 是路由配置，
+
+`baseUrl` 是 vue 路由的 `base`，假设我们配置成:
+
+```json
+{
+  "front": {
+    "router": {
+      "baseUrl": "/chinamobiletest/front"
+    }
+  }
+}
+```
+
+**那我们访问项目 `demo-ts` 的时候应该访问：`http://localhost:3000/chinamobiletest/front/demo-ts/`**

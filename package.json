@@ -5,12 +5,12 @@
   "author": "",
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && rimraf dist && tsc -p tsconfig.build.json && webpack -p --mode=production",
+    "build": "rimraf dist && tsc -p tsconfig.build.json && webpack -p --mode=production",
     "format": "prettier --write \"src/**/*.ts\"",
-    "start": "npm run clean && ts-node -r tsconfig-paths/register src/main.ts & webpack --watch --mode=development --progress --devtool '#source-map'",
-    "start:dev": "npm run clean && tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\" & webpack --watch --mode=development --progress --devtool '#source-map'",
-    "start:debug": "npm run clean && tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\" & webpack --watch --mode=development --progress --devtool '#source-map'",
-    "start:prod": "npm run clean && node dist/main.js && webpack -p --mode=production",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts & webpack --watch --mode=development --progress --devtool '#source-map'",
+    "start:dev": "tsc-watch -p tsconfig.build.json --onSuccess \"node dist/main.js\" & webpack --watch --mode=development --progress --devtool '#source-map'",
+    "start:debug": "tsc-watch -p tsconfig.build.json --onSuccess \"node --inspect-brk dist/main.js\" & webpack --watch --mode=development --progress --devtool '#source-map'",
+    "start:prod": "node dist/main.js && webpack -p --mode=production",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",
     "test:webpack": "webpack --watch --mode=development --progress --devtool '#source-map'",
@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "clean": "rm -rf static/dist"
+    "clean": "rm -rf static/dist dist"
   },
   "dependencies": {
     "@babel/polyfill": "^7.0.0",

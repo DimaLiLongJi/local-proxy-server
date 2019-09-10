@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '../views/Home.vue';
+import * as projectConfig from '$root/project.config.json';
 
 Vue.use(Router);
 
 export default new Router({
   mode: 'history',
-  base: '/pages/demo-js',
+  base: `${projectConfig.front.router.baseUrl}/demo-js`,
   routes: [
     {
       path: '/',

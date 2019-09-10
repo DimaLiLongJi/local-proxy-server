@@ -14,7 +14,7 @@ module.exports = {
     path: path.resolve(__dirname, 'static/dist'),
     filename: "[name].js",
     chunkFilename: "ts.[name].[chunkhash].js",
-    publicPath: '/dist/',
+    publicPath: '/static/dist/',
   },
   module: {
     rules: [
@@ -43,7 +43,10 @@ module.exports = {
           },
           'less-loader'
         ],
-        include: path.resolve(__dirname, 'public/ts'),
+        include: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, 'project.config.json')
+        ],
       },
       {
         test: /\.css$/,
@@ -66,7 +69,10 @@ module.exports = {
             }
           },
         ],
-        include: path.resolve(__dirname, 'public/ts'),
+        include: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, 'project.config.json')
+        ],
       },
       {
         test: /\.vue$/,
@@ -75,7 +81,10 @@ module.exports = {
           postcss: {},
           extractCSS: true,
         },
-        include: path.resolve(__dirname, 'public/ts'),
+        include: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, 'project.config.json')
+        ],
       },
       /** end */
 
@@ -104,7 +113,10 @@ module.exports = {
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'url-loader',
-        include: path.resolve(__dirname, 'public/ts'),
+        include: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, 'project.config.json')
+        ],
       },
       {
         test: /\.(png|jpg|gif|svg|)$/,
@@ -112,7 +124,10 @@ module.exports = {
         options: {
           name: 'images/[name].[ext]?[hash]',
         },
-        include: path.resolve(__dirname, 'public/ts'),
+        include: [
+          path.resolve(__dirname, 'public'),
+          path.resolve(__dirname, 'project.config.json')
+        ],
       }
     ],
   },
@@ -158,8 +173,8 @@ module.exports = {
       '.tsx',
     ],
     alias: {
-      vue$: 'vue/dist/vue.esm.js',
-      // '@': './public/ts',
+      '@': path.resolve(__dirname, './public/ts'),
+      '$root': path.resolve(__dirname, './'),
     },
   },
 };

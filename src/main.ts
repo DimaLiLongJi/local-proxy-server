@@ -10,7 +10,7 @@ async function main() {
     },
   );
   // 静态资源
-  app.useStaticAssets(join(__dirname, '..', 'static'));
+  app.useStaticAssets(join(__dirname, '..', './'));
   // 视图模板引擎
   app.setBaseViewsDir(join(__dirname, '..', 'views'));
   app.setViewEngine('ejs');
