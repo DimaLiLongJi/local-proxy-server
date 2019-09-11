@@ -102,6 +102,7 @@ function replaceRouterFileTemplate(path, routerPath) {
   const content = fs.readFileSync(path, 'utf8');
   const newContent = content.replace('$needReplacePathToken', routerPath);
   fs.writeFileSync(path, newContent, { encoding: 'utf8' });
+  console.log('    ', chalk.green('★'), chalk.green('路由文件替换完毕'));
 }
 
 program
