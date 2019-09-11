@@ -5,6 +5,7 @@
 ```json
 {
   "scripts": {
+    "new": "node ./build/new.js",
     "start": "ts-node -r tsconfig-paths/register src/main.ts & webpack --watch --mode=development --progress --devtool '#source-map'",
     "start:prod": "node dist/main.js && webpack -p --mode=production",
     "test:front": "webpack --watch --mode=development --progress --devtool '#source-map'",
@@ -14,11 +15,19 @@
 }
 ```
 
+- `new` 创建一个项目
 - `start` 启动本地开发
 - `start:prod` 本地启用生产模式
 - `test:front` webpack 测试本地开发模式打包
 - `build` 生产模式构建打包文件
 - `clean` **linux macos使用**，删除打包文件
+
+
+## 新建项目
+
+1. 运行 `npm install` 安装依赖
+2. 运行 `npm run new` 选择选项并创建项目
+3. 按照提示 `npm start` 并打开浏览器展示项目
 
 
 ## 目录结构及说明
