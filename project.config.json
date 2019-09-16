@@ -1,5 +1,6 @@
 {
   "server": {
+    "port": 3000,
     "proxy": [
       {
         "baseUrl": "/api",
@@ -10,7 +11,10 @@
         "target": "https://wxxcs.hl139.net/logs",
         "commit": "国杨日志"
       }
-    ]
+    ],
+    "hmr": {
+      "port": 3001
+    }
   },
   "front": {
     "router": {

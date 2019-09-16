@@ -8,7 +8,7 @@
     <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 开始 -->
     <script src="/static/common/auto-scale.js"></script>
     <!-- postcss-px-to-viewport 替代移动端手淘自适应的方案 结束 -->
-    <link rel="stylesheet" href="/static/dist/<%- path %>.css">
+    <link rel="stylesheet" href="http://localhost:<%- port %>/static/dist/<%- path %>.css">
   </head>
   <body>
     <div id="app">
@@ -29,7 +29,7 @@
     <!-- 中国移动的插码结束 -->
 
     <!-- js逻辑文件开始 -->
-    <script src="/static/dist/<%- path %>.js"></script>
+    <script src="http://localhost:<%- port %>/static/dist/<%- path %>.js"></script>
     <!-- js逻辑文件结束 -->
   </body>
 </html>

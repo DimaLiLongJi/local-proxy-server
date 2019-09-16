@@ -9,13 +9,14 @@ export class FrontController {
   @Render('index')
   pageGet(@Req() req: ExpressRequest): {
     path: string,
+    port: number,
   } {
     const reg = new RegExp(`^${projectConfig.front.router.baseUrl}\/([^\/]+)[^\/]*`);
-    console.log(77777, reg);
     const path = req.url.match(reg)[1];
     console.log('访问到的页面路径', req.url, path);
     return {
       path,
+      port: projectConfig.server.hmr.port,
     };
   }
 }

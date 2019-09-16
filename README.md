@@ -6,20 +6,18 @@
 {
   "scripts": {
     "new": "node ./build/new.js",
-    "start": "ts-node -r tsconfig-paths/register src/main.ts & webpack --watch --mode=development --progress --devtool '#source-map'",
+    "start": "ts-node -r tsconfig-paths/register src/main.ts & webpack-dev-server --watch --mode=development --progress --devtool '#source-map'",
     "start:prod": "node dist/main.js && webpack -p --mode=production",
-    "test:front": "webpack --watch --mode=development --progress --devtool '#source-map'",
-    "build": "webpack -p --mode=production",
+    "build:front": "webpack -p --mode=production",
     "clean": "rm -rf static/dist dist"
   },
 }
 ```
 
 - `new` 创建一个项目
-- `start` 启动本地开发
+- `start` 启动本地开发，并开启热重载
 - `start:prod` 本地启用生产模式
-- `test:front` webpack 测试本地开发模式打包
-- `build` 生产模式构建打包文件
+- `build:front` 生产模式构建打包文件
 - `clean` **linux macos使用**，删除打包文件
 
 
@@ -27,7 +25,7 @@
 
 1. 运行 `npm install` 安装依赖
 2. 运行 `npm run new` 选择选项并创建项目
-3. 按照提示 `npm start` 并打开浏览器展示项目
+3. 按照提示 `npm start` 并打开浏览器展示项目并开启热重载
 
 
 ## 目录结构及说明
@@ -40,8 +38,6 @@
 ├── views 后台模板
 ├── project.config.json 项目配置文件
 ├── webpack.config.js webpack编译器配置文件
-├── webpack.js.config.js js编译器配置文件
-├── webpack.ts.config.js ts编译器配置文件
 ```
 
 ### public vue前台开发目录
@@ -106,6 +102,7 @@ static
 ```json
 {
   "server": {
+    "port": 3000,
     "proxy": [
       {
         "baseUrl": "/api",
@@ -116,7 +113,10 @@ static
         "target": "https://wxxcs.hl139.net/logs",
         "commit": "国杨日志"
       }
-    ]
+    ],
+    "hmr": {
+      "port": 9001
+    }
   },
   "front": {
     "router": {
@@ -127,6 +127,10 @@ static
 ```
 
 ### server 服务端配置
+
+`port` 为启动页面和代理的端口，默认是 `3000` 则打开页面为 `http://localhost:3000` 的地址，
+
+`hmr` 为热重载监听端口，默认是 `3001`
 
 `proxy` 可以是一个指向开发环境 API 服务器代理的数组：
 

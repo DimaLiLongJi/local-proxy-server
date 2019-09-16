@@ -2,10 +2,12 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 import { AppModule } from './app.module';
+import * as projectConfig from '../project.config.json';
 
 async function main() {
   const app = await NestFactory.create<NestExpressApplication>(
-    AppModule, {
+    AppModule,
+    {
       cors: true,
     },
   );
@@ -16,7 +18,8 @@ async function main() {
   app.setViewEngine('ejs');
 
   // 监听端口3000
-  await app.listen(3000);
+  await app.listen(projectConfig.server.port);
+  console.log('服务监听端口：', projectConfig.server.port);
 }
 
 main();
