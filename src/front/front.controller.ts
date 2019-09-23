@@ -11,7 +11,7 @@ export class FrontController {
     path: string,
     port: number,
   } {
-    const reg = new RegExp(`^${projectConfig.front.router.baseUrl}\/([^\/]+)[^\/]*`);
+    const reg = new RegExp(`^${projectConfig.front.router.baseUrl}\/([^\/\?]+)[^\/]*`);
     const path = req.url.match(reg)[1];
     console.log('访问到的页面路径', req.url, path);
     return {
