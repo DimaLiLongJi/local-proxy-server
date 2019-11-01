@@ -60,7 +60,7 @@
     "commander": "^3.0.1",
     "css-loader": "^0.28.11",
     "ejs": "^2.7.1",
-    "eslint": "^3.18.0",
+    "eslint": "^6.6.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-vue": "^5.2.3",
     "file-loader": "^4.2.0",
