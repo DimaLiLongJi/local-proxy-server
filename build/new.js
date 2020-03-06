@@ -6,7 +6,7 @@ const path = require('path');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
 const glob = require('glob');
-const projectConfig = require('../project.config.json');
+// const projectConfig = require('../project.config.json');
 
 
 /**
@@ -30,23 +30,24 @@ function getPageName(filePath, PAGE_FLODER, ENTRY) {
 function checkFinderName(name) {
   const nameList = new Map();
 
-  const jsFinder = path.resolve(__dirname, '../public/js/pages/');
+  // const jsFinder = path.resolve(__dirname, '../public/js/pages/');
+  const jsFinder = path.resolve(__dirname, '../public/pages/');
   const jsEntry = 'main.js';
   const jsPages = jsFinder + '/**/' + jsEntry;
 
-  const tsFinder = path.resolve(__dirname, '../public/ts/pages/');
-  const tsEntry = 'main.ts';
-  const tsPages = tsFinder + '/**/' + tsEntry;
+  // const tsFinder = path.resolve(__dirname, '../public/ts/pages/');
+  // const tsEntry = 'main.ts';
+  // const tsPages = tsFinder + '/**/' + tsEntry;
 
   glob.sync(jsPages).forEach((entry) => {
     const pageName = getPageName(entry, jsFinder, jsEntry);
     nameList.set(pageName, pageName);
   });
 
-  glob.sync(tsPages).forEach((entry) => {
-    const pageName = getPageName(entry, tsFinder, tsEntry);
-    nameList.set(pageName, pageName);
-  });
+  // glob.sync(tsPages).forEach((entry) => {
+  //   const pageName = getPageName(entry, tsFinder, tsEntry);
+  //   nameList.set(pageName, pageName);
+  // });
 
   return nameList.has(name);
 }
@@ -93,16 +94,29 @@ async function copyFile(_targetPath, _templatePath) {
 }
 
 /**
- * 替换 router 文件中的目录
+ * 替换文件中的占位符
  *
  * @param {string} path
- * @param {string} routerPath
+ * @param {string} replaceContent
  */
-function replaceRouterFileTemplate(path, routerPath) {
+function replaceRouterFileTemplate(path, replaceContent) {
   const content = fs.readFileSync(path, 'utf8');
-  const newContent = content.replace('$needReplacePathToken', routerPath);
+  const newContent = content.replace(/\$needReplacePathToken/g, replaceContent);
   fs.writeFileSync(path, newContent, { encoding: 'utf8' });
   console.log('    ', chalk.green('★'), chalk.green('路由文件替换完毕'));
+}
+
+/**
+ * 替换文件中的占位符
+ *
+ * @param {string} path
+ * @param {string} replaceContent
+ */
+function replacMainFileTemplate(path, replaceContent) {
+  const content = fs.readFileSync(path, 'utf8');
+  const newContent = content.replace(/\$needReplaceBusinessType/g, replaceContent);
+  fs.writeFileSync(path, newContent, { encoding: 'utf8' });
+  console.log('    ', chalk.green('★'), chalk.green('main文件替换完毕'));
 }
 
 program
@@ -114,29 +128,35 @@ program
   .description('创建前端项目')
   .action(async (cmd, option) => {
     // 获取交互 使用哪种语言 并获取项目名
-    const answers = await inquirer.prompt([{
-      type: 'list',
-      name: 'languageChoice',
-      message: '想用什么语言写vue应用呢',
-      choices: [
-        {
-          name: 'JavaScript',
-          value: 'js'
-        },
-        {
-          name: 'TypeScript',
-          value: 'ts'
-        }
-      ]
-    }, {
+    const answers = await inquirer.prompt([
+    //   {
+    //   type: 'list',
+    //   name: 'languageChoice',
+    //   message: '想用什么语言写vue应用呢',
+    //   choices: [
+    //     {
+    //       name: 'JavaScript',
+    //       value: 'js'
+    //     },
+    //     {
+    //       name: 'TypeScript',
+    //       value: 'ts'
+    //     }
+    //   ]
+    // },
+    {
       type: 'input',
-      message: '设置创建的文件夹名',
+      message: '设置创建的活动文件夹名',
       name: 'pathname',
       validate: (val) => {
         const has = checkFinderName(val);
         if (!has) return true;
         else return `文件夹名字：${val} 已存在，请重新输入`;
       }
+    }, {
+      type: 'input',
+      message: '设置创建的活动businessType',
+      name: 'businessType'
     }]);
     // 设置模板路径
     let templatePath = '';
@@ -144,15 +164,17 @@ program
     let targetPath = '';
     // 获取路由文件路径
     let routerFilePath = '';
-    if (answers.languageChoice === 'js') {
-      templatePath = path.resolve(__dirname, './template/js');
-      targetPath = path.resolve(__dirname, `../public/js/pages/${answers.pathname}`);
+    // if (answers.languageChoice === 'js') {
+      templatePath = path.resolve(__dirname, './template');
+      // targetPath = path.resolve(__dirname, `../public/js/pages/${answers.pathname}`);
+      targetPath = path.resolve(__dirname, `../public/pages/${answers.pathname}`);
       routerFilePath = `${targetPath}/config/router.js`;
-    } else {
-      templatePath = path.resolve(__dirname, './template/ts');
-      targetPath = path.resolve(__dirname, `../public/ts/pages/${answers.pathname}`);
-      routerFilePath = `${targetPath}/config/router.ts`;
-    }
+      mainPath = `${targetPath}/main.js`;
+    // } else {
+    //   templatePath = path.resolve(__dirname, './template/ts');
+    //   targetPath = path.resolve(__dirname, `../public/ts/pages/${answers.pathname}`);
+    //   routerFilePath = `${targetPath}/config/router.ts`;
+    // }
 
     // 创建文件目录
     fs.mkdirSync(targetPath);
@@ -161,11 +183,12 @@ program
     const result = await copyTemplate(templatePath, targetPath);
 
     if (result) {
-      // 替换路由文件的标志位
+      // 替换文件的标志位
       replaceRouterFileTemplate(routerFilePath, answers.pathname);
+      replacMainFileTemplate(mainPath, answers.businessType);
       console.log('    ', '----------------------------------------');
       console.log('    ', chalk.green('★'), chalk.green('构建成功'));
-      console.info('    ', chalk.green('★'), chalk.green(`请运行 npm start 并在浏览器打开 http://localhost:3000${projectConfig.front.router.baseUrl}/${answers.pathname}`));
+      console.info('    ', chalk.green('★'), chalk.green(`请运行 npm start 并在浏览器打开`));
     }
   });
 

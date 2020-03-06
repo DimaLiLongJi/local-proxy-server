@@ -1,24 +1,25 @@
 {
-  "server": {
-    "port": 3000,
-    "proxy": [
-      {
-        "baseUrl": "/api",
-        "target": "https://wxxcs.hl139.net/api",
-        "commit": "友朋接口"
-      }, {
-        "baseUrl": "/logs",
-        "target": "https://wxxcs.hl139.net/logs",
-        "commit": "国杨日志"
-      }
-    ],
-    "hmr": {
-      "port": 3001
+  "base": {
+    "dev": {
+      "base": "/frontend-test/",
+      "requestBaseUrl": "https://wxxcs.hl139.net/chinamobiletest",
+      "webpackPublicPath": "http://localhost:3001/static/"
+    },
+    "test": {
+      "base": "/frontend-test/",
+      "requestBaseUrl": "https://wxxcs.hl139.net/chinamobiletest",
+      "webpackPublicPath": "https://wxxcs.hl139.net/frontend-test/"
+    },
+    "prod": {
+      "base": "/frontend/",
+      "requestBaseUrl": "https://139.hl139.cn/chinamobiles",
+      "webpackPublicPath": "https://wxxcs.hl139.net/frontend/"
     }
   },
-  "front": {
-    "router": {
-      "baseUrl": "/chinamobiletest/front"
+  "server": {
+    "port": 3000,
+    "hmr": {
+      "port": 3001
     }
   }
 }

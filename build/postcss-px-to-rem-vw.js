@@ -80,7 +80,7 @@ function createPxReplaceRem(viewportSize, minPixelValue, unitPrecision, remUnit)
 function toFixed(number, precision) {
   const multiplier = Math.pow(10, precision + 1),
     wholeNumber = Math.floor(number * multiplier);
-  return (Math.round(wholeNumber / 10) * 10 / multiplier).toFixed(2);
+  return Math.round(wholeNumber / 10) * 10 / multiplier;
 }
 
 function blacklistedSelector(blacklist, selector) {

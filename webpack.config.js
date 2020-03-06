@@ -7,24 +7,34 @@ const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const projectConfig = require('./project.config.json');
+const proxyConfig = require('./proxy.config.json');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = (env) => {
+  const htmlWebpackPluginList = Object.keys(initEntry()).map(floder => {
+    return  new HtmlWebpackPlugin({
+      filename: `${floder}/index.html`,
+      template: './build/index.ejs',
+      inject: 'body',
+      title: '加载中...',
+      chunks: [floder],
+      environment: projectConfig.base[env].webpackPublicPath,
+    });
+  });
+
   return {
     name: 'vue-project',
     entry: {
       // 自动构建入口
-      ...initEntry('js'),
-      ...initEntry('ts'),
+      ...initEntry(),
+      // ...initEntry('js'),
+      // ...initEntry('ts'),
     },
     output: {
-      path: path.resolve(__dirname, 'static/dist'),
-      filename: "[name].js",
+      path: path.resolve(__dirname, 'static'),
+      filename: '[name]/index.js',
+      publicPath: projectConfig.base[env].webpackPublicPath,
       chunkFilename: "[name].[chunkhash].js",
-      publicPath:
-        // 生产模式在/static/dist/ 本地开发在下面
-        env === 'production' ?
-          '/static/dist/' :
-          `http://localhost:${projectConfig.server.hmr.port}/static/dist/`,
     },
     module: {
       rules: [
@@ -91,9 +101,8 @@ module.exports = (env) => {
             postcss: {},
             extractCSS: true,
           },
-          include: [
-            path.resolve(__dirname, 'public'),
-            path.resolve(__dirname, 'project.config.json')
+          exclude: [
+            path.resolve(__dirname, 'node_modules')
           ],
         },
         /** end */
@@ -119,7 +128,7 @@ module.exports = (env) => {
             configFile: path.resolve(__dirname, './public/ts/tsconfig.json')
           }
         }, {
-          test: /\.(eot|svg|ttf|woff|woff2)$/,
+          test: /\.(eot|svg|ttf|TTF|woff|woff2)$/,
           loader: 'url-loader',
           include: [
             path.resolve(__dirname, 'public'),
@@ -129,7 +138,13 @@ module.exports = (env) => {
           test: /\.(png|jpg|gif|svg|)$/,
           loader: 'file-loader',
           options: {
-            name: 'images/[name].[ext]?[hash]',
+            name(file) {
+              const fileSplit = file.split('/');
+              const contextProjectPath = fileSplit[fileSplit.length - 3];
+              const beforeProjectPath = fileSplit[fileSplit.length - 4];
+              if (beforeProjectPath === 'pages') return `${contextProjectPath}/images/[name].[ext]?[hash]`;
+              else return 'images/[name].[ext]?[hash]';
+            },
           },
           include: [
             path.resolve(__dirname, 'public'),
@@ -138,14 +153,22 @@ module.exports = (env) => {
         }
       ],
     },
+    
     plugins: [
       new VueLoaderPlugin(),
       new MiniCssExtractPlugin({
-        filename: '[name].css',
+        filename: '[name]/index.css',
       }),
       new webpack.ProvidePlugin({
         regeneratorRuntime: 'regenerator-runtime',
       }),
+      new webpack.DefinePlugin({
+        'process.env': {
+          'NODE_ENV': JSON.stringify(env),
+          'config': JSON.stringify(projectConfig.base[env]),
+        },
+      }),
+      ...htmlWebpackPluginList,
       new HappyPack({
         //用id来标识 happypack处理那里类文件
         id: 'babel',
@@ -192,11 +215,13 @@ module.exports = (env) => {
       hot: true, //热重载
       contentBase: path.resolve(__dirname, './'), //开发服务运行时的文件根目录
       host: 'localhost', //主机地址
+      // port: projectConfig.server.port, //端口号
       port: projectConfig.server.hmr.port, //端口号
       compress: true, //开发服务器是否启动gzip等压缩
       headers: {
         'Access-Control-Allow-Origin': '*',
       },
+      proxy: proxyConfig
     }
   }
 }
